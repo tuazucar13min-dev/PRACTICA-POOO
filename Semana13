@@ -1,0 +1,58 @@
+@FunctionalInterface
+public interface OperacionRopaAnime {
+    double ejecutar(ROPA_ANIME ropaAnime);
+}
+    }    
+
+public class ROPA_ANIME {
+    
+    private int codigo;
+    private int cantidad;
+    public String nombreProducto;
+    private String marca;
+    private double precio;
+    private String genero;
+    
+    public ROPA_ANIME(int codigo, int cantidad, BaseDatos bd){
+        this.codigo = codigo;
+        this.cantidad = cantidad;
+        String[] datos = bd.buscarProducto(codigo, cantidad);
+        if (datos != null) {
+            this.nombreProducto = datos[0];
+            this.marca = datos[1];
+            this.precio = Double.parseDouble(datos[2]);
+        }
+        else {
+            this.nombreProducto = " Producto no encontrado";
+            this.marca =" N/A";
+            this.precio = 0.0;
+            this.genero= " N/A";
+        }
+    }
+    
+    // Getters necesarios para Factura 
+    public int getCodigo(){ return codigo; }
+    public int getCantidad(){ return cantidad; }
+    public String getNombreProducto() { return nombreProducto;}
+    public String getMarca(){ return marca;}
+    public double getPrecio(){ return precio;}
+    public String getGenero(){ return genero;}
+    
+    // Setters
+    public void setCantidad(int cantidad) { this.cantidad = cantidad; }
+    public void setPrecio(double precio) { this.precio = precio; }
+
+    public double calcularPrecio(){
+        return precio;
+    }
+    
+    public double totalProducto(){
+        return precio * cantidad;
+    }
+
+    @Override
+    public String toString(){
+        return String.format("Producto: %s %s - cod: %d - cant: %d - Precio: S/%.2f", 
+                nombreProducto, marca, codigo, cantidad, precio);
+    }
+}

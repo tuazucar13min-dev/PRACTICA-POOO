@@ -1,0 +1,45 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
+package com.mycompany.semana14;
+import java.util.ArrayList;
+import java.util.List;
+/**
+ *
+ * @author CIELO
+ */
+public class SEMANA14 {
+// En Factura.java
+interface CompraObserver {
+    void notificarCompra ( String mensaje);
+}  
+
+class EmailNotificier implements CompraObserver {
+public void notificarCompra ( String mensaje ){
+System.out.println( " Email enviado: " + mensaje );
+}
+}
+
+class SMSNotificae implements CompraObserver {
+ public void notificarCompra ( String mensaje ){
+System.out.println( " SMS enviado: " + mensaje );
+}  
+}
+public class Factura {
+private List<CompraObserver> observers = new ArrayList<>();
+
+public void agregarObserver ( CompraObserver observer ){
+observers.add ( observer);
+}
+private void notificarObservers( String mensaje ){
+for (CompraObserver observer : observers){
+observer.notificarCompra(mensaje);
+}
+}
+public void imprimirFactura(){
+notificarObservers( "Fcatura generada - Total: S/"+ totalGeneral);    
+}
+}
+
+}
